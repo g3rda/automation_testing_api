@@ -14,7 +14,7 @@ public class TrelloTests {
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder();
 
         Board board = new Board();
-        String name = "JJJJ";
+        String name = "board_name";
 
         Board createdBoard = retrofitBuilder.getTrelloApi().createBoard(board, name).execute().body();
         boardId = createdBoard.getId();
@@ -49,7 +49,7 @@ public class TrelloTests {
     public void checkCreateList() throws IOException {
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder();
         Board board = new Board();
-        String name = "SOMELIST";
+        String name = "list_name";
         List createdList = retrofitBuilder.getTrelloApi().createList(name, boardId,  board.getKey(), board.getToken()).execute().body();
         listId = createdList.getId();
         Assert.assertEquals(createdList.getName(), name);
@@ -59,7 +59,7 @@ public class TrelloTests {
     public void checkCreateCard() throws IOException {
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder();
         Board board = new Board();
-        Card card = new Card("NAME",  "Here is some info for you", listId);
+        Card card = new Card("card_name",  "some_info", listId);
         Card createdCard = retrofitBuilder.getTrelloApi().createCard(card, board.getKey(), board.getToken()).execute().body();
         cardId = createdCard.getId();
         Assert.assertEquals(createdCard.getName(), card.getName());
@@ -69,7 +69,7 @@ public class TrelloTests {
     public void checkUpdateCard() throws IOException {
         RetrofitBuilder retrofitBuilder = new RetrofitBuilder();
         Board board = new Board();
-        Card card = new Card("NEW NAME", "Here is some new info for you", cardId, listId);
+        Card card = new Card("new_card_name", "some_new_info", cardId, listId);
         Date date = new Date(	System.currentTimeMillis()+1000*60*60*24*5);
         card.setDue(date);
         Card createdCard = retrofitBuilder.getTrelloApi().updateCard(card, cardId, board.getKey(), board.getToken()).execute().body();
